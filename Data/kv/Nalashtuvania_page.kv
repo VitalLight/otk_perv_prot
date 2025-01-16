@@ -1,0 +1,241 @@
+#:import dt datetime
+#:import rnd random
+#:import mainScreens Main_screens
+#:import mwp Main_screens.MesageWindowPopup
+#:import spinerCusomSetting Main_screens.SpinnerCustomSetting
+
+
+# ДЛЯ - - - СТОРІНКИ НАЛАШТУВАННЯ- - -
+
+
+<Nalashtuvania_page>:
+
+    GridLayout:
+        cols:1
+        size:root.width, root.height  #  дозволяє щоб всі віджети були в межах вікна
+        spacing:15
+
+        #  ЗМІЩЕННЯ НА ШИРИНУ ТА ВИСОТУ КНОПОК
+        #x:root.width * 0.1
+        y:root.height * 0.1
+
+        canvas.before:
+            Color:
+                rgba:(171/255, 227/255, 141/255, .1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        BoxLayout: # ІНФОРМАЦІЯ ПРО ЛАБОРАТОРІЮ
+            orientation: 'vertical'
+            size_hint_y: 2
+            spacing:10
+            padding:10
+
+            BoxLayout:
+                Label:
+                    size_hint_x: .35
+                    text: "НАЗВА ЛАБОРАТОРІЇ"
+                    halign: 'left'
+                    text_size: self.size
+
+                TextInput:
+                    id: lv_name
+                    multiline:True
+                    text:root.dict_info_about_lv["lv_name"]
+                    size_hint_y: None
+                    height: self.minimum_height
+                    on_cursor:
+                        root.insert_info_about_lv()
+
+            BoxLayout:
+                Label:
+                    size_hint_x: .35
+                    text:"АДРЕСА ЛАБОРАТОРІЇ, КОНТАКТИ"
+                    text_size: self.width, None
+                    halign: 'left'
+                    text_size: self.size
+                TextInput:
+                    id: lv_adressa
+                    multiline:True
+                    size_hint_y: None
+                    height: self.minimum_height
+                    text:root.dict_info_about_lv["lv_adressa"]
+
+                    on_cursor:
+                        root.insert_info_about_lv()
+
+            BoxLayout:
+                Label:
+                    size_hint_x: .35
+                    text:"ІНФО ПРО АТЕСТАТ"
+                    halign: 'left'
+                    text_size: self.size
+
+                TextInput:
+                    id: lv_atestat
+                    multiline:True
+                    text:root.dict_info_about_lv["lv_atestat"]
+                    height: self.minimum_height
+                    on_cursor:
+                        root.insert_info_about_lv()
+
+            BoxLayout:
+
+                Label:
+                    size_hint_x: .35
+                    text:"МІСЦЕ ПРВЕДЕННЯ ВИПРОБУВАНЬ"
+                    text_size: self.width, None
+                    halign: 'left'
+                    text_size: self.size
+
+                TextInput:
+                    id: adressa_vuprobuvan
+                    multiline:True
+                    text:root.dict_info_about_lv["adressa_vuprobuvan"]
+                    height: self.minimum_height
+                    on_cursor:
+                        root.insert_info_about_lv()
+            BoxLayout:
+                Label:
+                    size_hint_x: .35
+                    text:"НОМЕР ЛВ В ГСЦ"
+                    halign: 'left'
+                    text_size: self.size
+                TextInput:
+                    id: nomer_v_gsc
+
+                    multiline:True
+                    text:root.dict_info_about_lv["nomer_v_gsc"]
+                    height: self.minimum_height
+                    #on_text_validate:
+                    on_cursor:
+                        root.insert_info_about_lv()
+
+            BoxLayout:
+                Label:
+                    size_hint_x: .35
+                    text:"НОМЕР ДІЛЬНИЦІ"
+                    halign: 'left'
+                    text_size: self.size
+                TextInput:
+                    id:nomer_dilnuci
+                    multiline:True
+                    text:root.dict_info_about_lv["nomer_dilnuci"]
+                    height: self.minimum_height
+                    on_cursor:
+                        root.insert_info_about_lv()
+
+
+
+        BoxLayout: # ПЕРСОНАЛ ЯКИЙ ПОТРІБНО ДОДАТИ ЧИ ВИДАЛИТИ
+
+            BoxLayout:  # "КЕРІВНИК ДІЛЬНИЦІ"
+                orientation: 'vertical'
+                spacing:5
+
+                ToggleButton:
+                    id:tb_kerivnuku
+                    text: "КЕРІВНИК ДІЛЬНИЦІ"
+                    group:'personal'
+                    state: 'normal'
+                    on_press:
+                        root.input_personal_active_disactive(tb_kerivnuku,  input_kerivnuka, btn_add_remove_save, input_ingenera)
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y:2
+                    spacing:5
+
+                    Spinner:
+                        id:sp_kerivnuku
+                        background_color: (.094, .843, .286, 1)
+                        values:mainScreens.dict_personal['list_kerivnuku']
+                        #text:self.values[0]
+                        text:mainScreens.dict_personal['kerivnuk'][0]
+                        option_cls: spinerCusomSetting
+
+                    TextInput:
+                        id:input_kerivnuka
+                        hint_text:'ВВЕДІТЬ КЕРІВНИКА І НАТИСНІСТЬ ENTER'
+                        text:
+                        valign:'center'
+                        halign:'center'
+                        multiline: False
+                        write_tab: False
+                        disabled: True
+
+            BoxLayout: # "ІНЖЕНЕРИ ДІЛЬНИЦІ"
+                orientation: 'vertical'
+                spacing:5
+
+                ToggleButton:
+                    id:tb_ingeneru
+                    text: "ІНЖЕНЕРИ"
+                    group:'personal'
+                    state: 'normal'
+                    on_press:
+                        root.input_personal_active_disactive(tb_ingeneru,  input_ingenera, btn_add_remove_save, input_kerivnuka)
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y:2
+                    spacing:5
+
+                    Spinner:  # ПЕРШИЙ ІНЖЕНЕР
+                        id:sp_first_engineer
+                        background_color: (.094, .843, .286, 1)
+                        values:mainScreens.dict_personal['list_ingeneru']
+                        #text:self.values[0]
+                        text:mainScreens.dict_personal['ingeneru_vukonavci'][0]
+                        option_cls: spinerCusomSetting
+
+                    Spinner:  # ДРУГИЙ ІНЖЕНЕР
+                        id:sp_second_engineer
+                        background_color: (.094, .843, .286, 1)
+                        #background_color: (.0, .722, .624, 1)
+                        values:mainScreens.dict_personal['list_ingeneru']
+                        text:mainScreens.dict_personal['ingeneru_vukonavci'][1]
+                        option_cls: spinerCusomSetting
+
+
+                    TextInput:
+                        id:input_ingenera
+                        hint_text:'ВВЕДІТЬ ІНЖЕНЕРА І НАТИСНІСТЬ ENTER'
+                        text:
+                        valign:'center'
+                        halign:'center'
+                        multiline: False
+                        write_tab: False
+                        disabled: True
+
+
+        BoxLayout:  # КНОПКИ ДОДАТИ/ВИДАЛИТИ
+            size_hint_y: .5
+            orientation:'vertical'
+
+            BoxLayout:
+                id:btn_add_remove_save
+                disabled:True
+
+                Button:
+                    text:"ВИДАЛИТИ (-)"
+                    background_color: (.933, .067, .20, 1)
+                    on_press:
+                        root.btn_remove_person(input_kerivnuka, input_ingenera, sp_kerivnuku, sp_first_engineer, sp_second_engineer)
+
+                Button:
+                    text:"ДОДАТИ(+)"
+                    background_color: (.094, .843, .286, 1)
+                    on_press:
+                        root.btn_add_person(input_kerivnuka, input_ingenera, sp_kerivnuku, sp_first_engineer, sp_second_engineer)
+
+            Button:
+                size_hint_y:1
+                text:"ЗБЕРЕГТИ"
+                background_color: (.153, .459, .58, 1)
+                on_press:
+                    root.btn_save_change_in_file_pesonal(sp_kerivnuku, sp_first_engineer, sp_second_engineer)
+
+
+

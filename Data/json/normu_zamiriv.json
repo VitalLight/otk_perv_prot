@@ -1,0 +1,11 @@
+{
+  "problesku_povorotiv": [70, 110],
+  "svitlopropuskania": [[76,86],[70,80]],
+  "blugni_faru_NEosvitlena": [100,900,100],
+  "blugni_faru_osvitlena": [2200,9000,100],
+  "dalni_faru": [10000,40000,100],
+  "tumanni_faru": [100,600,100],
+  "vusota_protectora": [[4,10], [5,15]],
+  "luft_kerma": [[2,11,1],[10,20,1]]
+
+}

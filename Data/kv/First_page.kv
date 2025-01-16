@@ -1,0 +1,351 @@
+#:import dt datetime
+#:import rnd random
+#:import mainScreens Main_screens
+#:import spinerCusomSetting Main_screens.SpinnerCustomSetting
+
+# ДЛЯ - - -  ПЕРШОЇ СТОРІНКИ- - -
+
+<First_page>:
+
+	# можна змінити фон вікна
+
+    GridLayout:
+        cols:1
+        size:root.width, root.height  #  дозволяє щоб всі віджети були в межах вікна
+
+        #  ЗМІЩЕННЯ НА ШИРИНУ ТА ВИСОТУ КНОПОК
+        x:root.width * 0.1
+        y:root.height * 0.1
+
+        canvas.before:
+            Color:
+                rgba:(171/255, 227/255, 141/255, .1)
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        BoxLayout:
+            spacing:10
+            padding: 10,10
+
+            size_hint: 1, .1
+
+            Label:
+                text:f"ПРОТОКОЛ_№ {mainScreens.dict_info_about_dilnuci_lv['nomer_v_gsc']}-"
+                size: self.texture_size
+
+            TextInput:
+                id: ti_nomer_protocolu
+                #size_hint_x: None
+                text:mainScreens.HelpingFun.slice_string(self.text, 5)
+
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing:10
+            padding: 10,0
+
+            Label:
+                padding: 10,0
+                size_hint: 1,1.2
+                text: str(mainScreens.dict_f_vumogu_otk['п_6.1'])
+                halign:'left'
+                text_size:root.width,None
+                font_size: "20"
+                color:'#F5AA17'
+
+
+
+            BoxLayout:
+                spacing:5
+                padding: 10,0
+                size_hint: 1,1.5
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+                    size_hint: .7, 1
+
+                    Label:
+                        text:'\nДАТА'
+                        text_size:
+                        size: self.texture_size
+
+                    TextInput:
+                        id: ti_data_test
+                        height:self.minimum_height
+                        multiline: False
+                        text:mainScreens.HelpingFun.slice_string(str(dt.date.today().strftime("%d.%m.%Y") ), 10)
+                        write_tab:False
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+                    size_hint: 1.5,1
+
+
+                    Label:
+                        #size_hint_y: .5
+                        text:'\nВІН КОД'
+                        size: self.texture_size
+
+                    TextInput:
+                        id: ti_vin_code
+                        height:self.minimum_height
+                        multiline: False
+                        text:root.upper_string(mainScreens.HelpingFun.slice_string(self.text, 17))
+                        write_tab:False
+
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+                    size_hint: 1,1
+
+                    Label:
+                        text:'\nДЕРЖ. НОМЕР'
+                        size: self.texture_size
+
+
+                    TextInput:
+                        id: ti_derj_nomer
+                        height:self.minimum_height
+                        multiline: False
+                        text:root.upper_string(mainScreens.HelpingFun.slice_string(self.text, 8))
+                        write_tab:False
+
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+                    size_hint: 1,1
+
+                    Label:
+                        text:'СЕРІЯ НОМЕР ТЕХПАСПОРТУ'
+                        size: self.texture_size
+                        text_size: self.width, None
+
+                    TextInput:
+                        id: ti_seria_tehpasportu
+                        height:self.minimum_height
+                        multiline: False
+                        text:root.upper_string(mainScreens.HelpingFun.slice_string(self.text, 10))
+                        write_tab:False
+
+            BoxLayout:  # ВИЗНАЧЕННЯ КАТЕГОРІЇ
+                spacing:5
+                padding: 10,0
+                size_hint: 1,1.8
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+                    Label:
+                        size_hint: None,None
+                        text:'КАТЕГОРІЯ КТЗ'
+                        size: self.texture_size
+
+                    Spinner:
+                        id:sp_kategoria
+                        size_hint: 1, None
+                        height: 30
+                        background_color: (.094, .843, .286, 1)
+                        text_autoupdate:True
+                        values: mainScreens.HelpingFun().kategorii
+                        option_cls: spinerCusomSetting
+                        on_text:
+                            mainScreens.First_page_screen().selected_kategory(self.text)
+                            app.bus_add_vumogu(self.text)
+                            app.set_screens_for_kategoria_ktz(self.text)
+
+
+
+
+                BoxLayout:  # проміжний
+                    size_hint_x: .5
+
+                BoxLayout: # ВИЗНАЧЕННЯ ВАНТАЖНОСТІ
+                    orientation: 'vertical'
+                    spacing:10
+                    Label:
+                        size_hint: None,None
+                        text:'ПОВНА МАСА, кг'
+                        size: self.texture_size
+
+                    TextInput:
+                        id: povna_masa
+                        size_hint: 1,None
+                        height:self.minimum_height
+                        multiline: False
+                        text:
+                        hint_text:"кг"
+                        write_tab:False
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+
+                    Label:
+                        text:'СПОР. МАСА, кг'
+                        size: self.texture_size
+                        text_size: self.width, None
+
+                    TextInput:
+                        id: sporiadjena_masa
+                        size_hint: 1,None
+                        height:self.minimum_height
+                        multiline: False
+                        write_tab:False
+                        text:
+                        hint_text:"кг"
+
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing:10
+                    Label:
+                        size_hint: None,None
+                        text:'ВАНТАЖНІСТЬ, т'
+                        text_size:
+                        size: self.texture_size
+
+                    TextInput:
+                        id: ti_vantajnist
+                        size_hint: 1,None
+                        height:self.minimum_height
+                        multiline: False
+                        text:
+                        hint_text:"т"
+                        write_tab:False
+                        on_text_validate:
+                            self.text = str(root.vantagnist(povna_masa.text, sporiadjena_masa.text))
+
+            BoxLayout:  # ІДЕНТИФІКАЦІЯ
+                spacing:20
+                padding: 10,0
+                size_hint: 1,1.2
+
+                BoxLayout:
+                    spacing_x:5
+                    size_hint: 1.4,None
+
+                    Button:
+                        id: tb_identification
+                        size_hint: 1, .5
+                        font_size: 17
+                        halign: 'center'
+                        text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                        text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_identif_tp']), 30) +"..."
+
+                        on_press:
+                            mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_identif_tp']))
+
+
+                    Spinner:
+                        id:sp_identif
+                        size_hint: .25, .5
+                        font_size: 14
+                        background_color: (.094, .843, .286, 1)
+                        text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                        values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                        option_cls: spinerCusomSetting
+
+
+            BoxLayout:  # ОСОБЛИВОСТІ КОНСТРУКЦІЇ
+                orientation: 'vertical'
+                spacing:10
+                padding_x: 10
+                font_size:12
+
+                size_hint: 1,4
+
+                BoxLayout:
+                    Label:
+                        size_hint: 1,.1
+                        text:'ОСОБЛИВОСТІ В КОНСТРУКЦІЇ'
+
+                BoxLayout:
+                    spacing:10
+                    size_hint:1, 2
+
+                    ToggleButton:  # ДІТИ
+                        id: tg_b_ditu
+                        text: "ДІТИ"
+                        background_down:mainScreens.dict_path_to_img['ditu']
+                        fit_mode: "scale-down"
+                        on_press:
+                            app.tb_ditu(tg_b_ditu)
+
+                    ToggleButton:  #  ТАКСІ
+                        id:tg_b_taxi
+                        text: "ТАКСІ"
+                        margin:0,0
+                        background_down:mainScreens.dict_path_to_img['taxi']
+                        fit_mode: "contain"
+                        on_press:
+                            app.tb_taxi(tg_b_taxi)
+
+                    ToggleButton:  #  НАВЧАЛЬНИЙ
+                        id: tb_navchalnui
+                        text: "НАВЧАЛЬНИЙ"
+                        text_size: self.width, None
+                        halign: 'center'
+                        background_down:mainScreens.dict_path_to_img['navchalniy']
+                        fit_mode: "contain"
+                        on_press:
+                            app.tb_navchalnuy(tb_navchalnui)
+
+                    ToggleButton:  #  ПЕРЕДНЯ ТУМАННА ФАРА
+                        id:tg_b_tumanka
+                        text: "ПЕРЕДНЯ ТУМАННА ФАРА"
+                        halign: 'center'
+                        text_size: self.width, None
+                        background_down:mainScreens.dict_path_to_img['fog_front_light']
+                        fit_mode: "cover"
+                        on_press:
+                            app.tb_tumanka(tg_b_tumanka)
+
+                BoxLayout: #
+                    size_hint:1,2
+                    spacing:10
+
+                    ToggleButton:  #  НЕГАБАРИТ
+                        id:tg_b_negabarut
+                        text: "НЕГАБАРИТ"
+                        text_size: self.width, None
+                        halign: 'center'
+                        background_down:mainScreens.dict_path_to_img['negabarut']
+                        fit_mode: "contain"
+                        on_press:
+                            app.tb_negabarut(tg_b_negabarut)
+
+                    ToggleButton:  #  НЕБЕЗПЕЧНІ ВАНТАЖІ
+                        id: tg_b_nebezpechniy
+                        text: "НЕБЕЗПЕЧНИЙ ВАНТАЖ"
+                        halign: 'center'
+                        text_size: self.width, None
+                        background_down:mainScreens.dict_path_to_img['nebezpechniy_vantag']
+                        fit_mode: "contain"
+                        on_press:
+                            app.tb_nebezpechiy(tg_b_nebezpechniy)
+
+                    ToggleButton:  #  CNG
+                        id:tg_b_cng
+                        text: "CNG"
+                        halign: 'center'
+                        text_size: self.width, None
+                        background_down:mainScreens.dict_path_to_img['cng']
+                        fit_mode: "contain"
+                        on_press:
+                            app.tb_gbo(tg_b_cng)
+
+                    ToggleButton:  #  LPG
+                        id:tg_b_lpg
+                        text: "LPG"
+                        halign: 'center'
+                        text_size: self.width, None
+                        background_down:mainScreens.dict_path_to_img['lpg']
+                        fit_mode: "cover"
+                        on_press:
+                            app.tb_gbo(tg_b_lpg)
+

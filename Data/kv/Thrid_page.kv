@@ -1,0 +1,716 @@
+
+#:import mainScreens Main_screens
+#:import fp Data.First_page.First_page
+#:import Thrid_page Data.Thrid_page.Thrid_page
+#:import rnd random
+#:import spinerCusomSetting Main_screens.SpinnerCustomSetting
+
+
+# ДЛЯ - - -  Третьої СТОРІНКИ- - -
+
+
+<Thrid_page>:
+
+	# ФОН СТОРІНКИ
+    GridLayout:
+        cols:1
+        size:root.width, root.height  #  дозволяє щоб всі віджети були в межах вікна
+
+        #  ЗМІЩЕННЯ НА ШИРИНУ ТА ВИСОТУ КНОПОК
+        x:root.width * 0.1
+        y:root.height * 0.1
+
+
+        canvas.before:
+            Color:
+                rgba:(171/255, 227/255, 141/255, .1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        BoxLayout:
+            orientation: "vertical"
+
+
+
+            BoxLayout: # ДВИГУН ТА ЙОГО СИСТЕМИ
+                id:engine_and_system
+                orientation: "vertical"
+                spacing_x:5
+                #font_size: 12
+                size_hint:1,.35
+
+                Label:
+                    size_hint_y:.5
+                    text: str(mainScreens.dict_f_vumogu_otk['п_6.3'])
+                    halign:'left'
+                    text_size:root.width,None
+                    color:'#F5AA17'
+                    #texture_size:self.size
+
+                BoxLayout
+                    size_hint_y: 1
+
+                    BoxLayout
+                        Button:
+                            size_hint: None, 1
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['btn_tup_paluva']), 30) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['btn_tup_paluva']))
+
+                        Spinner:
+                            id:sp_engine_paluvo
+                            size_hint: .1, 1
+                            background_color: (.094, .843, .286, 1)
+                            #text_autoupdate:False  # ставить на перше місце перше шо в списку values
+                            values: mainScreens.dict_f_vumogu_otk['engine_paluvo']  # варіанти відповідності
+                            option_cls: spinerCusomSetting
+
+                    BoxLayout
+                        Button:
+                            size_hint: None, 1
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['system_guvlenia']), 30) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['system_guvlenia']))
+
+                        Spinner:
+                            id:sp_engine_givlenia
+                            size_hint: .1, 1
+                            background_color: (.094, .843, .286, 1)
+                            text_autoupdate:False
+                            values: mainScreens.dict_f_vumogu_otk['engine_givlenia']  # варіанти відповідності
+                            option_cls: spinerCusomSetting
+
+                    BoxLayout
+                        Label:
+                            canvas.before:
+                                Color:
+                                    rgba:(.208,.271, .306, 1)
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+
+                            size_hint: None, 1
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: "ЗОВНІШНІЙ ШУМ, дБ(А)"
+                            halign: 'center'
+
+                        TextInput:
+                            id:ti_noise
+                            write_tab:False
+                            size_hint: .2, 1
+                            text: "-"
+                            halign:'center'
+                            multiline:False
+                            text:mainScreens.HelpingFun.slice_string(self.text, 2)
+
+
+
+                BoxLayout: #
+                    id:obd_perevirka
+                    spacing_x:5
+                    #font_size: 12
+                    size_hint_y:1
+
+                    BoxLayout: #
+                        Button:
+                            size_hint: .5, 1
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['engine_obd']), 30) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['engine_obd']))
+
+                        Spinner:
+                            id:sp_naiavnist_obd
+                            size_hint: .4, 1
+                            text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                            background_color: (.094, .843, .286, 1)
+                            #text:mainScreens.HelpingFun().info_naiavnisti[0]
+                            text_size: self.width, None
+                            color: "yellow"
+                            halign:"center"
+                            #values: mainScreens.dict_f_vumogu_otk['spn_engine_obd']  # варіанти відповідності
+                            values: mainScreens.HelpingFun().info_naiavnisti  # варіанти відповідності
+                            option_cls: spinerCusomSetting
+
+                        BoxLayout:
+                            Button:
+                                size_hint: .5, 1
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['perevirka_obd']), 30) +"..."
+                                halign: 'center'
+                                on_press:
+                                    mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['perevirka_obd']))
+
+                            Spinner:
+                                id:sp_engine_obd
+                                size_hint: .5, 1
+                                #text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                text:  mainScreens.dict_f_vumogu_otk['perevirka_obd_error'][1]
+                                values: mainScreens.dict_f_vumogu_otk['perevirka_obd_error']  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+
+            BoxLayout:  # ГАЛЬМІВНІ СИСТЕМИ
+                orientation: "vertical"
+                size_hint:1,.3
+                Label:
+                    size_hint_y:.3
+                    text: str(mainScreens.dict_f_vumogu_otk['п_6.4'])
+                    halign:'left'
+                    color:'#F5AA17'
+                    text_size:root.width,None
+
+                BoxLayout:
+                    orientation: "vertical"
+                    id:galmivni_systemu
+                    size_hint: 1, .7
+                    spacing_x:5
+                    font_size: 12
+
+                    BoxLayout
+                        BoxLayout
+                            Label:
+                                canvas.before:
+                                    Color:
+                                        rgba:(.208,.271, .306, 1)
+                                    Rectangle:
+                                        size: self.size
+                                        pos: self.pos
+
+                                size_hint: .7, 1
+                                font_size: 12
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: "РГС ТА ЇЇ ТЕХНІЙНИЙ СТАН"
+                                halign: 'center'
+
+                            BoxLayout
+                                orientation:"vertical"
+                                size_hint: .5, 1
+
+                                Spinner:
+                                    id:sp_rgs
+
+                                    font_size: 12
+                                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                    background_color: (.094, .843, .286, 1)
+                                    values: mainScreens.dict_f_vumogu_otk['typ_rgs']  # варіанти відповідності
+                                    option_cls: spinerCusomSetting
+
+
+                                Spinner:
+                                    id:sp_rgs_tech_stan
+
+                                    font_size: 12
+                                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                    background_color: (.094, .843, .286, 1)
+                                    values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                    option_cls: spinerCusomSetting
+
+                        BoxLayout
+                            Label:
+                                canvas.before:
+                                    Color:
+                                        rgba:(.208,.271, .306, 1)
+                                    Rectangle:
+                                        size: self.size
+                                        pos: self.pos
+
+                                size_hint: .7, 1
+                                font_size: 12
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: "СГС ТА ЇЇ ТЕХНІЙНИЙ СТАН"
+                                halign: 'center'
+
+                            BoxLayout
+                                orientation:"vertical"
+                                size_hint: .5, 1
+                                Spinner:
+                                    id:sp_sgs
+                                    font_size: 12
+                                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                    background_color: (.094, .843, .286, 1)
+                                    values: mainScreens.dict_f_vumogu_otk['typ_sgs']  # варіанти відповідності
+                                    option_cls: spinerCusomSetting
+
+                                Spinner:
+                                    id:sp_sgs_tech_stan
+                                    font_size: 12
+                                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                    background_color: (.094, .843, .286, 1)
+                                    values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                    option_cls: spinerCusomSetting
+
+
+                        BoxLayout
+                            Label:
+                                canvas.before:
+                                    Color:
+                                        rgba:(.208,.271, .306, 1)
+                                    Rectangle:
+                                        size: self.size
+                                        pos: self.pos
+
+                                size_hint: .7, 1
+                                font_size: 12
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: "ПРАЦЕЗДАТНІСТЬ ЗГС"
+                                halign: 'center'
+                            Spinner:
+                                id:sp_zgs_pracezdatnist
+                                size_hint: .3, 1
+                                font_size: 12
+                                text_size: self.width, None
+                                halign: 'center'
+                                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+            BoxLayout: # РУЛЬОВЕ КЕРУВАННЯ ТЕХНІЧНІ ВИМОГИ
+                id:ruluve_keruvania
+                orientation: "vertical"
+                size_hint: 1, .5
+                spacing_x:5
+                font_size: 12
+
+                Label:
+                    size_hint_y:.1
+                    text: str(mainScreens.dict_f_vumogu_otk['п_6.5'])
+                    halign:'left'
+                    color:'#F5AA17'
+                    text_size:root.width,None
+
+                BoxLayout: #
+                    size_hint_y: .25
+                    BoxLayout:
+                        orientation: "vertical"
+                        #size_hint_y: .5
+
+                        BoxLayout:
+                            size_hint_y: .5
+                            Button:
+                                size_hint_x: .8
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_kerm_pidsuluvach']), 30) +"..."
+                                halign: 'center'
+                                on_press:
+                                    mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_kerm_pidsuluvach']))
+
+                            Spinner:
+                                id:sp_pidsuluvach
+                                size_hint_x: .2
+                                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+                        BoxLayout:
+                            Button:
+                                size_hint_x: .8
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_signal_electro_pidsul']), 30) +"..."
+                                halign: 'center'
+                                on_press:
+                                    mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_signal_electro_pidsul']))
+
+                            Spinner:
+                                id:sp_signal_electro_pidsul
+                                size_hint_x: .2
+                                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        #size_hint_y: .5
+
+                        BoxLayout:
+                            size_hint_y: .7
+                            Button:
+                                size_hint_x: .8
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_kerm_luft']), 30) +"..."
+                                halign: 'center'
+                                on_press:
+                                    mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_kerm_luft']))
+
+                            TextInput:
+                                id:ti_kerm_luft
+                                write_tab:False
+                                size_hint_x: .2
+                                halign: 'center'
+                                text: " "
+                                multiline:False
+                                on_text_validate:
+                                    self.text = mainScreens.Thrid_page().luft_kolis(mainScreens.global_kategoria_ktz)
+
+                        BoxLayout:
+                            Button:
+                                size_hint_x: .8
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_riven_rob_ridunu']), 50) +"..."
+                                halign: 'center'
+                                on_press:
+                                    mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_riven_rob_ridunu']))
+
+                            Spinner:
+                                id:sp_riven_rob_ridunu
+                                size_hint_x: .2
+                                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+
+                BoxLayout:
+                    size_hint_y: .1
+                    Button:
+                        size_hint_x: .8
+                        text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                        text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_rul_tech_stan']), 50) +"..."
+                        halign: 'center'
+                        on_press:
+                            mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_rul_tech_stan']))
+
+                    Spinner:
+                        id:sp_rul_tech_stan
+                        size_hint_x: .2
+                        text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                        background_color: (.094, .843, .286, 1)
+                        values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                        option_cls: spinerCusomSetting
+
+            BoxLayout: # ВОГНІ СВІТЛОВІДБИВАЧІ ЕЛЕКТРООБЛАДНАННЯ
+                id:vogni_svitla
+                orientation: "vertical"
+                size_hint: 1, 1
+                spacing_x:5
+                font_size: 12
+
+                Label:  #
+                    size_hint_y:.2
+                    text: str(mainScreens.dict_f_vumogu_otk['п_6.6'])
+                    halign:'left'
+                    color:'#F5AA17'
+                    text_size:root.width,None
+
+
+                BoxLayout:  #  КІЛЬКІТСЬ КОЛІР ....
+                    size_hint:1,.3
+
+                    Button:
+                        size_hint_x: .8
+                        text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                        text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_kilkist_far']), 50) +"..."
+                        halign: 'center'
+                        on_press:
+                            mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_kilkist_far']))
+
+                    Spinner:
+                        id:sp_kilkist_far
+                        size_hint_x: .2
+                        text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                        background_color: (.094, .843, .286, 1)
+                        values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                        option_cls: spinerCusomSetting
+
+                BoxLayout:
+                    id:bl_faru
+                    size_hint_y: 1.6
+                    orientation: "vertical"
+
+                    BoxLayout:  #0 нахил ближніх фар
+                        size_hint_y: 1.45
+                        Button:
+                            size_hint_x: .5
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_nahul_blugnih_far']), 30) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(
+                                str(mainScreens.dict_f_vumogu_otk['v_nahul_blugnih_far'] +
+                                mainScreens.dict_f_vumogu_otk['nahul_blugnih_far_pidkazka'])
+                                )
+
+                        Slider:
+                            id: slider_nahul_blugnih_far
+                            size_hint_x: .4
+                            min: 1.0
+                            max: 2.5
+                            step: 0.05
+                            on_touch_move:
+                                ti_nahul_blugnih_far.text = str(round(slider_nahul_blugnih_far.value,2))
+
+                        BoxLayout:
+                            #orientation:'vertical'
+                            size_hint_x: .2
+
+                            TextInput:
+                                id:ti_nahul_blugnih_far
+                                write_tab:False
+                                #size_hint_x: .4
+                                text:
+                                background_color: (.188, .725, .965, .5)
+                                halign: 'center'
+                                multiline:False
+
+                            Spinner:
+                                id:sp_nahul_blugnih_far
+                                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+                    BoxLayout:  #1 верхній ближнє світло
+                        size_hint_y:  2
+                        Button:
+                            size_hint_x: .5
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_sula_faru_blugne_svitlo']), 40) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_sula_faru_blugne_svitlo']))
+
+                        BoxLayout:
+                            BoxLayout:
+                                orientation: "vertical"
+                                Label:
+                                    size_hint_y: .5
+                                    text: mainScreens.dict_f_vumogu_otk['ne_osvitlena']
+                                BoxLayout:
+                                    TextInput:
+                                        id:ti_nEosvit_liva_fara
+                                        halign:'center'
+                                        write_tab:False
+                                        #text:mainScreens.HelpingFun.slice_string(str(rnd.randrange(100,900,100)), 3)
+                                        text:str(root.liva_fara_NEosvitlena)
+                                        hint_text: "ЛІВА ФАРА"
+                                        multiline:False
+
+
+                                    TextInput:
+                                        id:ti_nEosvit_prava_fara
+                                        halign:'center'
+                                        write_tab:False
+                                        #text:mainScreens.HelpingFun.slice_string(str(rnd.randrange(100,900,100)), 3)
+                                        text:str(root.prava_fara_NEosvitlena)
+                                        hint_text: "ПРАВА ФАРА"
+                                        multiline:False
+
+
+
+                            BoxLayout:
+                                BoxLayout:
+                                    orientation: "vertical"
+
+                                    Label:
+                                        size_hint_y: .5
+                                        text: mainScreens.dict_f_vumogu_otk['osvitlena']
+
+                                    BoxLayout:
+                                        TextInput:
+                                            id:ti_Osvit_liva_fara
+                                            #size_hint: .2, 1
+                                            write_tab:False
+                                            halign:'center'
+                                            hint_text: "ЛІВА ФАРА"
+                                            text:str(root.liva_fara_osvitlena)
+                                            multiline:False
+
+                                        TextInput:
+                                            id:ti_Osvit_prava_fara
+                                            #size_hint: .2, 1
+                                            halign:'center'
+                                            write_tab:False
+                                            hint_text: "ПРАВА ФАРА"
+                                            text:str(root.prava_fara_osvitlena)
+                                            multiline:False
+
+
+                    BoxLayout:  #2 нижній дальнє світло
+                        size_hint_y: 2.5
+
+                        Button:
+                            size_hint_x: .5
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_sula_faru_dalne_svitlo']), 40) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_sula_faru_dalne_svitlo']))
+
+                        BoxLayout:
+                            orientation: "vertical"
+                            BoxLayout:
+                                TextInput:
+                                    id:ti_sula_svitla_dal_faru_left
+                                    halign:'center'
+                                    write_tab:False
+                                    hint_text: "ЛІВА ФАРА"
+                                    text: str(root.liva_fara_dalna)
+                                    multiline:False
+                                    on_text_validate:
+                                        suma_sul_svitla_dalnih_far.text = str(int(self.text) + int(sula_svitla_dal_faru_right.text))
+
+                                TextInput:
+                                    id:ti_sula_svitla_dal_faru_right
+                                    halign:'center'
+                                    write_tab:False
+                                    hint_text: "ПРАВА ФАРА"
+                                    text: str(root.prava_fara_dalna)
+                                    multiline:False
+                                    on_text_validate:
+                                        suma_sul_svitla_dalnih_far.text = str(int(isula_svitla_dal_faru_left.text) + int(self.text))
+
+                            TextInput:
+                                id:ti_suma_sul_svitla_dalnih_far
+                                halign:'center'
+                                write_tab:False
+                                text:str(root.liva_plus_prava_fara_dalna)
+                                hint_text: " ЛІВА + ПРАВА ФАРА"
+                                multiline:False
+                                on_text_validate:
+                                    self.text = str(int(isula_svitla_dal_faru_left.text) + int(sula_svitla_dal_faru_right.text))
+
+                BoxLayout:  #  ТУМАННІ ФАРИ
+                    id:id_tumanni_faru
+                    size_hint: 1,.35
+                    disabled:True
+
+                    BoxLayout:
+                        size_hint_x: .3
+
+                        Button:
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_nahul_tumannuh_far']), 30) +"..."
+                            halign: 'center'
+
+                        Spinner:
+                            id:sp_nahul_tumannuh_far
+                            size_hint_x: .2
+                            text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                            background_color: (.094, .843, .286, 1)
+                            values: mainScreens.HelpingFun().nahul_tumanuh_far  # варіанти відповідності
+                            option_cls: spinerCusomSetting
+
+                    BoxLayout:
+                        size_hint_x: .4
+
+                        Button:
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_peredni_tumanni_faru']), 25) +"..."
+                            halign: 'center'
+
+                        TextInput:
+                            id:ti_liva_tumanka
+                            size_hint_x: .3
+                            write_tab:False
+                            #text: root.liva_tumanka
+                            text: "-"
+                            valign:"center"
+                            hint_text: "ЛІВА"
+                            multiline:False
+
+                        TextInput:
+                            id:ti_prava_tumanka
+                            size_hint_x: .3
+                            write_tab:False
+                            #text:root.prava_tumanka
+                            text: "-"
+                            valign:"center"
+                            hint_text: "ПРАВА"
+                            multiline:False
+
+                BoxLayout:  # ІНШІ ПЗС
+                    id: inshi_pzs
+                    size_hint_y: .35
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_x: .3
+
+                        BoxLayout:
+                            size_hint_y: .8
+                            Button:
+                                size_hint_x: .8
+                                text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                                text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_sula_svitla_inshih_pzs']), 30) +"..."
+                                halign: 'center'
+                                on_press:
+                                    mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_sula_svitla_inshih_pzs']))
+
+                            Spinner:
+                                id:sp_sula_svitla_inshih_pzs
+                                size_hint_x: .2
+                                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                                background_color: (.094, .843, .286, 1)
+                                values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                                option_cls: spinerCusomSetting
+
+
+
+                    BoxLayout:
+                        size_hint_x: .5
+                        Button:
+                            size_hint_x: .90
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_chastota_probluskiv_povorotiv']), 30) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_chastota_probluskiv_povorotiv']))
+
+                        TextInput:
+                            id:ti_chastota_probluskiv_povorotiv
+                            write_tab:False
+                            size_hint_x: .20
+                            text:
+                                str(rnd.randrange(mainScreens.dict_normu_zamiriv["problesku_povorotiv"][0],
+                                mainScreens.dict_normu_zamiriv["problesku_povorotiv"][1], 2))
+                            halign: 'center'
+
+                BoxLayout:  #  ГАБАРИТНІ ВОГНІ... ДЖГУТИ, ПРОВОДИ ...
+                    size_hint_y: .3
+                    BoxLayout:
+                        Button:
+                            size_hint_x: .8
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_gabarutni_vogni']), 30) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_gabarutni_vogni']))
+
+                        Spinner:
+                            id:sp_gabarutni_vogni
+                            size_hint_x: .2
+                            text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                            background_color: (.094, .843, .286, 1)
+                            values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                            option_cls: spinerCusomSetting
+
+                    BoxLayout:
+                        Button:
+                            size_hint_x: .8
+                            text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                            text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_electroobladnania']), 25) +"..."
+                            halign: 'center'
+                            on_press:
+                                mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_electroobladnania']))
+
+                        Spinner:
+                            id:sp_electroobladnania
+                            size_hint_x: .2
+                            text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                            background_color: (.094, .843, .286, 1)
+                            values: mainScreens.HelpingFun().tak_ni_ns  # варіанти відповідності
+                            option_cls: spinerCusomSetting
+
+
+
+

@@ -1,0 +1,267 @@
+
+#:import mainScreens Main_screens
+#:import mwp Main_screens.MesageWindowPopup
+#:import rnd random
+#:import spinerCusomSetting Main_screens.SpinnerCustomSetting
+
+# ДЛЯ - - -  Пятої СТОРІНКИ- - -
+
+
+<Fifth_page>:
+	# ФОН СТОРІНКИ
+    GridLayout:
+        cols:1
+        size:root.width, root.height  #  дозволяє щоб всі віджети були в межах вікна
+
+        #  ЗМІЩЕННЯ НА ШИРИНУ ТА ВИСОТУ КНОПОК
+        x:root.width * 0.1
+        y:root.height * 0.1
+
+
+        canvas.before:
+            Color:
+                rgba:(171/255, 227/255, 141/255, .1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y:.25
+            orientation: "vertical"
+
+            Label:
+                #size_hint_y:.5
+                text: str(mainScreens.dict_f_vumogu_otk['п_6.14'])
+                halign:'left'
+                color:'#F5AA17'
+                text_size:root.width, None
+
+            BoxLayout:
+                Button:
+                    id: id_inshi_vumogu
+                    size_hint_x: .8
+                    text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                    text: mainScreens.HelpingFun.slice_string(str(mainScreens.dict_f_vumogu_otk['v_inshi_vumogu']), 30) +"..."
+                    halign: 'center'
+                    on_press:
+                        mainScreens.HelpingFun.show_window_popup(str(mainScreens.dict_f_vumogu_otk['v_inshi_vumogu']))
+
+                Spinner:
+                    id:sp_inshi_vumogu
+                    size_hint_x: .2
+                    text:mainScreens.HelpingFun().tak_ni_ns[0]
+                    text_size: self.width, None
+                    halign:'center'
+                    background_color: (.094, .843, .286, 1)
+                    values: mainScreens.HelpingFun().tak_ni_ns # варіанти відповідності
+                    option_cls: spinerCusomSetting
+
+
+
+        BoxLayout:
+            size_hint_y:.25
+            orientation: "vertical"
+
+
+            Label:
+                size_hint_y:.5
+                text: str(mainScreens.dict_f_vumogu_otk['п_6.15'])
+                halign:'left'
+                color:'#F5AA17'
+                text_size:root.width,None
+
+            Label:
+                size_hint_y:.5
+                text: str(mainScreens.dict_f_vumogu_otk['msg_error'])
+                halign:'center'
+                text_size:root.width,None
+
+        BoxLayout:  # ЗАЗНАЧАЮТЬСЯ КОДИ ПОМИЛОК
+            size_hint: 1,1
+
+            BoxLayout:  # НЕЗНАЧНІ
+                orientation: "vertical"
+                size_hint: 1,.85
+
+                Button:
+                    text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                    text: mainScreens.HelpingFun().typ_error[0]
+                    halign: 'center'
+                    on_press:
+                        root.open_file_with_nevidpovidnosti(path_to_file = "nevidpovidnist_neznachni.xlsx")
+
+                TextInput:
+                    id:ti_error_neznachni_1
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+                TextInput:
+                    id:ti_error_neznachni_2
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+                TextInput:
+                    id:ti_error_neznachni_3
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+            BoxLayout:  # ЗНАЧНІ
+                orientation: "vertical"
+                size_hint: 1,.85
+
+                Button:
+                    text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                    text: mainScreens.HelpingFun().typ_error[1]
+                    halign: 'center'
+                    on_press:
+                        root.open_file_with_nevidpovidnosti(path_to_file = "nevidpovidnist_znachni.xlsx")
+
+                TextInput:
+                    id:ti_error_znachni_1
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+                TextInput:
+                    id:ti_error_znachni_2
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+                TextInput:
+                    id:ti_error_znachni_3
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+
+            BoxLayout:  # НЕБЕЗПЕЧНІ
+                orientation: "vertical"
+                size_hint: 1,.85
+
+                Button:
+                    text_size: self.width, None  # ВИЗНАЧАЄ ШИРИНУ ВІДЖЕТА
+                    text: mainScreens.HelpingFun().typ_error[2]
+                    halign: 'center'
+                    on_press:
+                        root.open_file_with_nevidpovidnosti(path_to_file = "nevidpovidnist_nebezpechni.xlsx")
+
+                TextInput:
+                    id:ti_error_nebezpechni_1
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+                TextInput:
+                    id:ti_error_nebezpechni_2
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+                TextInput:
+                    id:ti_error_nebezpechni_3
+                    text:"-"
+                    multiline: False
+                    halign: 'center'
+                    write_tab: False
+
+
+        BoxLayout:  # ВИСНОВОК ПРО ВІДПОВІДНІСТЬ
+            #orientation: "vertical"
+            size_hint_y: .2
+
+            Label:
+                size_hint_x:.6
+                text: str(mainScreens.dict_f_vumogu_otk['vusnovo_pro_vidpovidnist'])
+                font_size: 14
+                halign:'center'
+                #valign:'center'
+                text_size:root.width-(root.width*self.size_hint_x),None
+                #text_size:self.size
+
+            Spinner:
+                id:sp_vusnovok_otk
+                size_hint_x: .3
+                text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                background_color: (.094, .843, .286, 1)
+                values: mainScreens.HelpingFun().vusnovok_otk
+                option_cls: spinerCusomSetting
+
+        BoxLayout:  # ПЕРСОНАЛ
+            orientation: "vertical"
+            size_hint_y: .5
+
+
+            BoxLayout:
+                Label:
+                    size_hint_x:.5
+                    text: str(mainScreens.dict_f_vumogu_otk['vukonavci'])
+                    font_size: 16
+                    halign:'left'
+                    color:'red'
+                    text_size:root.width,None
+
+            BoxLayout:
+                Label:
+                    size_hint_x:.5
+                    text: str(mainScreens.dict_f_vumogu_otk['kerivnuk_dilnuci'])
+                    color:'orange'
+                    bold: True
+                    font_size: 14
+                    halign:'right'
+                    text_size:root.width-(root.width*self.size_hint_x),None
+
+                Spinner:
+                    id:sp_kerivnuk_dilnuci
+                    size_hint_x: .3
+                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                    background_color: (.094, .843, .286, 1)
+                    color:'orange'
+                    values: mainScreens.dict_personal['list_kerivnuku']
+                    text:mainScreens.dict_personal['kerivnuk'][0]
+                    option_cls: spinerCusomSetting
+
+            BoxLayout:
+                Label:
+                    size_hint_x:.5
+                    text: str(mainScreens.dict_f_vumogu_otk['ingener'])
+                    font_size: 14
+                    halign:'right'
+                    text_size:root.width-(root.width*self.size_hint_x),None
+
+                Spinner:
+                    id:sp_first_enginner
+                    size_hint_x: .3
+                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                    background_color: (.094, .843, .286, 1)
+                    values: mainScreens.dict_personal['list_ingeneru']
+                    text:mainScreens.dict_personal['ingeneru_vukonavci'][0]
+                    option_cls: spinerCusomSetting
+
+            BoxLayout:
+                Label:
+                    size_hint_x:.5
+                    text: str(mainScreens.dict_f_vumogu_otk['ingener'])
+                    font_size: 14
+                    halign:'right'
+                    text_size:root.width-(root.width*self.size_hint_x),None
+
+                Spinner:
+                    id:sp_second_enginner
+                    size_hint_x: .3
+                    text_autoupdate:True  # ставить на перше місце перше шо в списку values
+                    background_color: (.094, .843, .286, 1)
+                    values: mainScreens.dict_personal['list_ingeneru']
+                    text:mainScreens.dict_personal['ingeneru_vukonavci'][1]
+                    option_cls: spinerCusomSetting

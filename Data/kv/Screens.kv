@@ -1,0 +1,381 @@
+#:import mainScreens Main_screens
+
+# РОЗТАШУВАННЯ ЕКРАНІВ З ТИПАМИ ВИПРОБУВАНЬ
+
+<MainScreens>:
+
+    First_page_screen:
+        name: "first_page_screen"
+
+    Second_page_screen:
+        name: 'second_page_screen'
+
+    Thrid_page_screen:
+        name: "thrid_page_screen"
+
+    Four_page_screen:
+        name: "four_page_screen"
+
+    Fifth_page_screen:
+        name: "fifth_page_screen"
+
+    Nalashtuvania_screen:
+        name: "nalashtuvania_screen"
+
+<Nalashtuvania_screen>:
+    BoxLayout:
+
+        BoxLayout:  # ОБЄКТ З Nalashtuvania_KV
+            orientation: 'vertical'
+
+            Nalashtuvania_page:  # обєкт класу розташування віджетів на першій сторінці
+                id:nalashtuvania_page  #  треба писати аби можна було звернутися до обєкту
+
+            BoxLayout:  #  НОМЕР ЕКРАНУ
+                size_hint:1,.1
+
+                Label:
+                    canvas.before:
+                        Color:
+                            rgba: 0.737, 0.96, .165, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    text:"---НАЛАШТУВАННЯ---"
+                    color: 'red'
+                    bold:True
+
+        BoxLayout: # КНОПКА ЗБОКУ
+            size_hint: .1, 1
+
+            Button:
+                padding: 10,5
+                text:'1 --->'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="first_page_screen"
+                    root.manager.transition.direction="left"
+
+
+
+<First_page_screen>:  # ПЛАНУВАННЯ ВИГЛЯДУ ПЕШОГО ЕКРАНУ(СТОРІНКИ)
+    #on_touch_move:   # ФУНКЦІЯ З КЛАСУ  First_page_screen, ЩО БУДЕ РУХАТИ ЕКРАН ЧЕРЕЗ ДОТИК
+
+    BoxLayout:
+        #size_hint: 1, 1
+
+        BoxLayout: # КНОПКА ЗБОКУ ЗЛІВА
+            size_hint: .1, 1
+
+            Button:
+                padding: 10,5
+                text:'НАЛАШТУВАННЯ'
+                background_color: '#57a2ed'
+                text_size:root.width-root.width*self.size_hint[0],None
+                color:'#0D141C'
+                bold: True
+
+                on_press:
+                    root.manager.current="nalashtuvania_screen"
+                    root.manager.transition.direction="right"
+
+
+        BoxLayout:
+            orientation: 'vertical'
+
+            BoxLayout:  # ОБЄКТ З FIRST_PAGE_KV
+                First_page:  # обєкт класу розташування віджетів на першій сторінці
+                    id:first_page  #  треба писати аби можна було звернутися до обєкту
+
+            BoxLayout:  #  НОМЕР ЕКРАНУ
+                size_hint:1,.1
+                canvas.before:
+                    Color:
+                        #rgba: root.background_color
+                        rgba: 0.737, 0.96, .165, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Button:
+                    text:"ДЛЯ ЗАМІТОК"
+                    color: 'black'
+                    bold: True
+                    #background_color:'#3cd987'
+                    background_color:0.678, 0.847, 0.902, 1
+                    on_press:
+                        mainScreens.Dlia_zamitok().txt_dlia_zapusiv()
+                Label:
+                    text:"---1---"
+                    color: 'red'
+                    bold:True
+
+
+        BoxLayout: # КНОПКА ЗБОКУ СПРАВА
+            size_hint: .1, 1
+
+            Button:
+                padding: 10,5
+                text:'2 --->'
+                background_color: '#dd3333'
+                #on_touch_move: # ФУНКЦІЯ З КЛАСУ  First_page_screen, ЩО БУДЕ РУХАТИ ЕКРАН ЧЕРЕЗ ДОТИК
+                on_press:
+                    mainScreens.First_page().move_to_second_page_if_katrgoria_check()
+
+
+
+<Second_page_screen>:  # ПЛАНУВАННЯ ВИГЛЯДУ ДРУГОГО ЕКРАНУ(СТОРІНКИ)
+
+    BoxLayout:
+        size_hint:1,1
+
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'<--- 1'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="first_page_screen"
+                    root.manager.transition.direction="right"
+
+        #-------------------
+        BoxLayout:
+            orientation: 'vertical'
+
+            BoxLayout:
+                Second_page:  # обєкт класу розташування віджетів на ДРУГІЙ сторінці
+                    id:second_page
+                    #pos_hint: {'x': .5, 'y': .5}
+
+            BoxLayout:  # НОМЕР СТОРІНКИ
+                size_hint:1,.1  # РОЗМІР НЕ ЗМІНЮВАТИ
+                canvas.before:
+                    Color:
+                        rgba: 0.737, 0.96, .165, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Button:
+                    text:"ДЛЯ ЗАМІТОК"
+                    color: 'black'
+                    bold: True
+                    background_color:0.678, 0.847, 0.902, 1
+                    on_press:
+                        mainScreens.Dlia_zamitok().txt_dlia_zapusiv()
+                Label:
+                    text:"---2---"
+                    color: 'red'
+                    bold:True
+        #-------------------
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'3--->'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="thrid_page_screen"
+                    root.manager.transition.direction="left"
+
+
+<Thrid_page_screen>:
+    BoxLayout:
+        size_hint:1,1
+
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'<--- 2'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="second_page_screen"
+                    root.manager.transition.direction="right"
+
+        #-------------------
+        BoxLayout:
+            size_hint: 1, 1
+            orientation: 'vertical'
+
+            Thrid_page:  # обєкт класу розташування віджетів на ДРУГІЙ сторінці
+                id:thrid_page
+
+            BoxLayout:  # НОМЕР СТОРІНКИ
+                size_hint:1,.1  # РОЗМІР НЕ ЗМІНЮВАТИ
+                canvas.before:
+                    Color:
+                        rgba: 0.737, 0.96, .165, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Button:
+                    text:"ДЛЯ ЗАМІТОК"
+                    color: 'black'
+                    bold: True
+                    background_color:0.678, 0.847, 0.902, 1
+                    on_press:
+                        mainScreens.Dlia_zamitok().txt_dlia_zapusiv()
+                Label:
+                    text:"---3---"
+                    color: 'red'
+                    bold:True
+        #-------------------
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'4--->'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="four_page_screen"
+                    root.manager.transition.direction="left"
+
+
+<Four_page_screen>:
+    BoxLayout:
+        size_hint:1,1
+
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'<--- 3'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="thrid_page_screen"
+                    root.manager.transition.direction="right"
+
+        #-------------------
+        BoxLayout:
+            size_hint: 1, 1
+            orientation: 'vertical'
+
+            Four_page:  # обєкт класу розташування віджетів на ЧЕТВЕРТІЙ сторінці
+                id:four_page
+
+            BoxLayout:  # НОМЕР СТОРІНКИ
+                size_hint:1,.1  # РОЗМІР НЕ ЗМІНЮВАТИ
+                canvas.before:
+                    Color:
+                        rgba: 0.737, 0.96, .165, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Button:
+                    text:"ДЛЯ ЗАМІТОК"
+                    color: 'black'
+                    bold: True
+                    background_color:0.678, 0.847, 0.902, 1
+                    on_press:
+                        mainScreens.Dlia_zamitok().txt_dlia_zapusiv()
+                Label:
+                    text:"---4---"
+                    color: 'red'
+                    bold:True
+        #-------------------
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'5--->'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="fifth_page_screen"
+                    root.manager.transition.direction="left"
+
+<Fifth_page_screen>:
+    BoxLayout:
+        size_hint:1,1
+
+        BoxLayout:
+            size_hint:0.1,1
+
+            Button:
+                text:'<--- 4'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="four_page_screen"
+                    root.manager.transition.direction="right"
+
+        #-------------------
+        BoxLayout:
+            size_hint: 1, 1
+            orientation: 'vertical'
+
+            Fifth_page:  # обєкт класу розташування віджетів на ЧЕТВЕРТІЙ сторінці
+                id:fifth_page
+
+            BoxLayout:  # НОМЕР СТОРІНКИ
+                size_hint:1,.1  # РОЗМІР НЕ ЗМІНЮВАТИ
+                canvas.before:
+                    Color:
+                        rgba: 0.737, 0.96, .165, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Button:
+                    text:"ДЛЯ ЗАМІТОК"
+                    color: 'black'
+                    bold: True
+                    background_color:0.678, 0.847, 0.902, 1
+                    on_press:
+                        mainScreens.Dlia_zamitok().txt_dlia_zapusiv()
+
+                Label:
+                    text:"---5---"
+                    color: 'red'
+                    bold:True
+        #-------------------
+        BoxLayout:
+            size_hint:0.1,1
+            orientation: 'vertical'
+
+            Button:
+                text:'ДРУК'
+                background_color: '#46adf9'
+                on_press:
+                    mainScreens.Print_btn().druk_protokolu_otk()
+
+            Button:
+                text:'1--->'
+                background_color: '#dd3333'
+                on_press:
+                    root.manager.current="first_page_screen"
+                    root.manager.transition.direction="left"
+
+
+# Вікно з повідомленнями про вміст вимоги
+<MesageWindowPopup>
+    BoxLayout:
+        id:popup_boxLayout
+        orientation: 'vertical'
+
+        Label:
+            id:lbl_popup
+            text_size: self.width, None
+            size: self.texture_size
+
+
+        Button:
+            id: btn_popup
+            size_hint_y: .1
+            text:"ЗАКРИТИ ВІКНО"
+
+
+# Вікно із занесенням ЗАМІТОК
+<ZamitkuWindowPopup>
+    BoxLayout:
+        id:popup_boxLayout_zamitku
+        orientation: 'vertical'
+
+        TextInput:
+            id:ti_popup_zamitku
+            hint_text:'ВВЕДІТЬ ЗАМІТКУ'
+
+
+        Button:
+            id: btn_popup_zamitku
+            size_hint_y: .1
+            text:"ЗАКРИТИ ВІКНО"
+
