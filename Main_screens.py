@@ -38,7 +38,7 @@ from datetime import datetime
 from kivy.uix.screenmanager import Screen, ScreenManager, WipeTransition, \
     SlideTransition  # ДЛЯ створення різних екранів
 
-""" відкриватимуться файли з інформацією для створення протокколу"""
+""" відкриватимуться файли з інформацією для створення протоколу"""
 # відкриття файлу з вимогами протоколу ОТК
 with open('Data\\json\\vumogu_otk.json', 'r', encoding='utf-8') as f_vumogu_otk:
     dict_f_vumogu_otk = json.load(f_vumogu_otk)
