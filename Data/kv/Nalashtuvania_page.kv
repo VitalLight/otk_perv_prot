@@ -5,6 +5,8 @@
 #:import spinerCusomSetting Main_screens.SpinnerCustomSetting
 
 
+
+
 # ДЛЯ - - - СТОРІНКИ НАЛАШТУВАННЯ- - -
 
 
@@ -237,5 +239,10 @@
                 on_press:
                     root.btn_save_change_in_file_pesonal(sp_kerivnuku, sp_first_engineer, sp_second_engineer)
 
-
+            Button:
+                size_hint_y:1
+                text:"СТВОРЕННЯ АКТУАЛЬНИХ ФАЙЛІВ З НЕВІДПОВІДНОСТЯМИ"
+                background_color: (.506, .651, .851, 1)
+                on_press:
+                    root.files_with_error()
 

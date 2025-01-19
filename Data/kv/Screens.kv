@@ -65,10 +65,11 @@
         #size_hint: 1, 1
 
         BoxLayout: # КНОПКА ЗБОКУ ЗЛІВА
+            padding: 5
             size_hint: .1, 1
+            orientation:'vertical'
 
             Button:
-                padding: 10,5
                 text:'НАЛАШТУВАННЯ'
                 background_color: '#57a2ed'
                 text_size:root.width-root.width*self.size_hint[0],None
@@ -78,7 +79,6 @@
                 on_press:
                     root.manager.current="nalashtuvania_screen"
                     root.manager.transition.direction="right"
-
 
         BoxLayout:
             orientation: 'vertical'

@@ -1,3 +1,4 @@
+
 # налаштування розміру вікна ківі
 from kivy.core.window import Window
 
@@ -6,6 +7,8 @@ Window.size = (720, 550)  # розміри вікна
 from kivy.uix.widget import Widget
 
 import json
+
+import subprocess
 
 # відкриваємо файл з персоналом
 with open('Data\\json\\personal.json', encoding='utf-8') as personal:
@@ -134,3 +137,13 @@ class Nalashtuvania_page(Widget):
                   ensure_ascii=False, #  це щоб не було форматування
                   indent=4
                   )
+
+    # запускає арр для вибору файлу і створення з нього трьох щодо типів не відповідності
+    def files_with_error(self):
+        subprocess.Popen(['python', 'create_files_for_nevidpovidnosti_error.py'])
+
+
+
+
+
+

@@ -7,6 +7,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.properties import StringProperty
 import os
 
+import pandas as pd
 
 class FileChooserWidget(BoxLayout):
     file_path = StringProperty('')
@@ -58,6 +59,17 @@ class FileChooserWidget(BoxLayout):
         if self.file_chooser.selection:
             self.file_path = self.file_chooser.selection[0]
             self.file_label.text = f'Selected file: {self.file_path}'
+            print('self.file_path', self.file_path)
+            df_reader = pd.read_excel(self.file_path)
+
+            nevidpovidnist_neznachni = df_reader[df_reader['Unnamed: 7'] == 'X']
+            nevidpovidnist_znachni = df_reader[df_reader['Unnamed: 8'] == 'X']
+            nevidpovidnist_nebezpechni = df_reader[df_reader['Unnamed: 9'] == 'X']
+
+            # збереження до файлу
+            nevidpovidnist_neznachni.to_excel("nevidpovidnist_neznachni.xlsx")
+            nevidpovidnist_znachni.to_excel("nevidpovidnist_znachni.xlsx")
+            nevidpovidnist_nebezpechni.to_excel("nevidpovidnist_nebezpechni.xlsx")
 
 
 class FileChooserApp(App):

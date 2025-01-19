@@ -35,6 +35,7 @@ from Data.Nalashtuvania_page import Nalashtuvania_page
 # ----------------------------------
 from datetime import datetime
 
+
 from kivy.uix.screenmanager import Screen, ScreenManager, WipeTransition, \
     SlideTransition  # ДЛЯ створення різних екранів
 
@@ -154,6 +155,7 @@ class HelpingFun():
         """
         #  Закриває виринаюче вікно при натиску кнопки
         show.ids.btn_popup.on_press = popup_obj.dismiss
+
 
     def boxlayout_btn_textinput(self, btn_id, btn_size_hint, btn_text_size, btn_text, btn_halign, btn_on_press,
                                 t_input_id, t_input_size_hint, t_input_text):
